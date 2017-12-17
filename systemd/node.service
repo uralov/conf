@@ -1,0 +1,22 @@
+# Make a myapp.service file (replacing 'myapp' with your app's name, obviously):
+
+[Unit]
+Description=My app
+
+[Service]
+ExecStart=/var/www/myapp/app.js
+Restart=always
+User=nobody
+Group=nobody
+Environment=PATH=/usr/bin:/usr/local/bin
+Environment=NODE_ENV=production
+WorkingDirectory=/var/www/myapp
+
+[Install]
+WantedBy=multi-user.target
+
+
+# Copy your service file into the /etc/systemd/system.
+# Start it with "systemctl start myapp"
+# Enable it to run on boot with "systemctl enable myapp"
+# See logs with "journalctl -u myapp"

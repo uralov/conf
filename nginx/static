@@ -1,0 +1,12 @@
+server {
+    listen 80;
+    server_name test.ru;
+
+    location ~* \.(jpg|jpeg|gif|png|ico|css|js|txt|swf|xml|svg)$ {
+        root /home/uralov/projects/hep/hep/static;
+    }
+
+    location ~* \.(.*)$ {
+    	root /home/app-user/hep/hep/static;
+    }
+}

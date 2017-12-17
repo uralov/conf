@@ -1,0 +1,11 @@
+[Unit]
+Description=xvfb runner
+After=network.target
+
+[Service]
+User=web
+Group=web
+ExecStart=/usr/bin/Xvfb :0 -screen 0 800x600x16
+
+[Install]
+WantedBy=multi-user.target

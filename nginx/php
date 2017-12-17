@@ -1,0 +1,27 @@
+server {
+    listen   80;
+    server_name localhost;
+    set $root_path /var/www;
+    root $root_path;
+    
+    index index.php index.html index.htm;
+    error_page   404  =  /404.php;
+    charset utf-8;
+
+    access_log  /var/www/pma/logs/access.log;
+    error_log   /var/www/pma/logs/error.log;
+    
+    location ~* ^.+\.(jpg|jpeg|gif|png|ico|css|bmp|js|swf|flv)$ {
+        root $root_path;
+        access_log off;
+        expires 3d; # кешируем у клиента на 3 дня
+    }
+
+    location ~ \.php$ {
+        fastcgi_pass unix:///var/run/php5-fpm.sock;
+        fastcgi_index  index.php;
+        fastcgi_param  SCRIPT_FILENAME  $document_root$fastcgi_script_name;
+        fastcgi_param  DOCUMENT_ROOT $root_path;
+        include        fastcgi_params;
+    }
+}

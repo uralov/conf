@@ -1,0 +1,15 @@
+[Unit]
+Description=Celery Service
+After=network.target
+
+[Service]
+User=www-data
+Group=www-data
+PIDFile=/run/celery/pid
+WorkingDirectory=/var/www/test
+ExecStart=/var/www/test/env/bin/python manage.py celery worker --beat --loglevel info --pidfile /run/celery/pid --logfile /var/log/celery/celery.log
+ExecReload=/bin/kill -s HUP $MAINPID
+ExecStop=/bin/kill -s TERM $MAINPID
+
+[Install]
+WantedBy=multi-user.target

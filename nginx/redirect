@@ -1,0 +1,7 @@
+# redirect
+server {
+    listen 80;
+    server_name www.test.ru
+                test.ru
+    rewrite ^ http://test2.ru$request_uri? permanent;
+}

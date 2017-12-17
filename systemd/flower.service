@@ -1,0 +1,15 @@
+[Unit]
+Description=Flower Service
+After=network.target
+
+[Service]
+User=www-data
+Group=www-data
+PIDFile=/run/flower/pid
+WorkingDirectory=/var/www/test
+ExecStart=/var/www/test/env/bin/flower -A temba.temba_celery --address=127.0.0.1 --port=5555
+ExecReload=/bin/kill -s HUP $MAINPID
+ExecStop=/bin/kill -s TERM $MAINPID
+
+[Install]
+WantedBy=multi-user.target

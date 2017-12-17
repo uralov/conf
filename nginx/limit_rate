@@ -1,0 +1,13 @@
+limit_req_zone $binary_remote_addr zone=perip:10m rate=1r/s;
+
+server {
+    listen 80;
+
+    server_name test.ru www.test.ru;
+
+    location / {
+        limit_req zone=perip burst=5;
+        proxy_pass http://127.0.0.1:8000/;
+        include /etc/nginx/proxy_params;
+    }
+}

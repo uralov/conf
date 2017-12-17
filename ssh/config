@@ -1,0 +1,5 @@
+# add to .ssh/config
+host _alias_
+    HostName _host_name_
+    port _port_
+    User _user_name_

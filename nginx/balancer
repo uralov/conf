@@ -1,0 +1,14 @@
+# balancer
+upstream frontend {
+    ip_hash;
+    server 1.1.1.1:8000;
+    server 2.2.2.2:8000;
+}
+
+server {
+	location ~* \.(jpg|jpeg|gif|png|ico|css|js|txt|swf|xml)$ {
+        proxy_pass http://static$request_uri;
+        proxy_set_header Host      $host;
+        proxy_set_header X-Real-IP $remote_addr;
+    }
+}

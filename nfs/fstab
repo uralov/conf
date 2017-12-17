@@ -1,0 +1,3 @@
+LABEL=DOROOT       /               ext4    errors=remount-ro 0       1
+1.1.1.1:/home/nfs/public  /home/frontend/project/public nfs defaults,rsize=32768,wsize=32768,soft 0 0
+
