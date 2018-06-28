@@ -1,0 +1,31 @@
+server {
+    listen 80;
+
+    server_name splwars.ru;
+
+    access_log /var/log/nginx/splwars-access.log;
+    error_log /var/log/nginx/splwars-error.log error;
+
+    location / {
+        limit_req zone=perip burst=5;
+
+        if (-f /tmp/maintenance.tmp) {
+            return 503;
+        }
+
+        proxy_pass          http://frontend$request_uri;
+        proxy_set_header    Host                $host;
+        proxy_set_header    X-Real-IP           $remote_addr;
+        proxy_set_header    X-Forwarded-For     $proxy_add_x_forwarded_for;
+    }
+
+    error_page 503 @maintenance;
+    location @maintenance {
+        rewrite ^(.*)$ /html/maintenance.html break;
+        proxy_set_header Host static.splwars.ru;
+        proxy_pass http://static;
+        internal;
+    }
+
+    client_max_body_size 10m;
+}
